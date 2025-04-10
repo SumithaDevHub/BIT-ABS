@@ -1,0 +1,270 @@
+{
+  "students": [
+    {
+      "rollNo": "BIT001",
+      "name": "Sumitha",
+      "email": "sumitha@bitsathy.ac.in",
+      "department": "Computer Science",
+      "year": "3rd Year",
+      "password": "123",
+      "id": "bb43"
+    },
+    {
+      "rollNo": "BIT002",
+      "name": "Rohini",
+      "email": "rohini@bitsathy.ac.in",
+      "department": "Electronics and Communication",
+      "year": "2nd Year",
+      "password": "123",
+      "id": "828d"
+    },
+    {
+      "rollNo": "BIT003",
+      "name": "Sandhiya",
+      "email": "sandhiya@bitsathy.ac.in",
+      "department": "Artificial Intelligence",
+      "year": "4th Year",
+      "password": "123",
+      "id": "c305"
+    },
+    {
+      "rollNo": "BIT004",
+      "name": "Swetha",
+      "email": "swetha@bitsathy.ac.in",
+      "department": "Information Technology",
+      "year": "1st Year",
+      "password": "123",
+      "id": "7a26"
+    },
+    {
+      "rollNo": "BIT005",
+      "name": "StudentX",
+      "email": "studentx@bitsathy.ac.in",
+      "department": "Mechanical Engineering",
+      "year": "3rd Year",
+      "password": "123",
+      "id": "e5ed"
+    }
+  ],
+  "staff": [
+    {
+      "staffId": "STF001",
+      "name": "Mohanpriya",
+      "email": "mohanpriya@bitsathy.ac.in",
+      "department": "AIML",
+      "designation": "Assistant Professor",
+      "password": "123",
+      "id": "953b"
+    },
+    {
+      "staffId": "STF002",
+      "name": "Karthiga",
+      "email": "karthiga@bitsathy.ac.in",
+      "department": "CSE",
+      "designation": "Assistant Professor",
+      "password": "123",
+      "id": "766a"
+    },
+    {
+      "staffId": "STF003",
+      "name": "Dr. C Palanisamy",
+      "email": "principal@bitsathy.ac.in",
+      "department": "Administration",
+      "designation": "Principal",
+      "password": "123",
+      "id": "e687"
+    },
+    {
+      "staffId": "STF004",
+      "name": "Dr. K Sivakumar",
+      "email": "dean@bitsathy.ac.in",
+      "department": "Mechanical",
+      "designation": "Dean, Student Affairs",
+      "password": "123",
+      "id": "8eae"
+    },
+    {
+      "staffId": "STF005",
+      "name": "Student Affairs Team",
+      "email": "studentaffairs@bitsathy.ac.in",
+      "department": "Administration",
+      "designation": "Student Affairs",
+      "password": "123",
+      "id": "119a"
+    },
+    {
+      "staffId": "STF006",
+      "name": "MTeam",
+      "email": "mteam@bitsathy.ac.in",
+      "department": "Administration",
+      "designation": "Management Team",
+      "password": "123",
+      "id": "b4d6"
+    },
+    {
+      "staffId": "STF007",
+      "name": "TAC Team",
+      "email": "tacteam@bitsathy.ac.in",
+      "department": "Teaching & Learning",
+      "designation": "TAC Member",
+      "password": "123",
+      "id": "0f70"
+    },
+    {
+      "staffId": "STF008",
+      "name": "Saranya",
+      "email": "saranya.ft@bitsathy.ac.in",
+      "department": "Fashion Technology",
+      "designation": "Assistant Professor",
+      "password": "123",
+      "id": "9968"
+    },
+    {
+      "staffId": "STF009",
+      "name": "Rajesh Kanna",
+      "email": "rajeshkanna@bitsathy.ac.in",
+      "department": "CSE",
+      "designation": "Associate Professor",
+      "password": "123",
+      "id": "1bc1"
+    },
+    {
+      "staffId": "STF010",
+      "name": "Stephen Amalraj",
+      "email": "stephen@bitsathy.ac.in",
+      "department": "Electrical and Electronics",
+      "designation": "Senior Lecturer",
+      "password": "123",
+      "id": "d7ad"
+    },
+    {
+      "staffId": "STF011",
+      "name": "Sasikala",
+      "email": "sasikala@bitsathy.ac.in",
+      "department": "CSE",
+      "designation": "Head of Department",
+      "password": "123",
+      "id": "24e4"
+    },
+    {
+      "staffId": "STF012",
+      "name": "Aslin",
+      "email": "aslin@bitsathy.ac.in",
+      "department": "AI & DS",
+      "designation": "Assistant Professor",
+      "password": "123",
+      "id": "ac83"
+    },
+    {
+      "staffId": "STF013",
+      "name": "Pidathala Sahitya",
+      "email": "sahitya.ft@bitsathy.ac.in",
+      "department": "Food Technology",
+      "designation": "Lecturer",
+      "password": "123",
+      "id": "c827"
+    },
+    {
+      "staffId": "STF014",
+      "name": "Nitya",
+      "email": "nitya@bitsathy.ac.in",
+      "department": "Cyber Security",
+      "designation": "Assistant Professor",
+      "password": "123",
+      "id": "8f76"
+    }
+  ],
+  "admins": [
+    {
+      "adminId": "ADMIN001",
+      "name": "adminBIT",
+      "email": "admin@bitsathy.ac.in",
+      "role": "System Administrator",
+      "password": "123",
+      "id": "0f06"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "e259",
+      "studentId": "BIT001",
+      "studentName": "Sumitha",
+      "staffId": "STF001",
+      "date": "2025-04-12",
+      "time": "01:04",
+      "emergency": "Urgent",
+      "meetLink": "https://chatgpt.com/c/67f7ce84-385c-8003-8226-a9c4f02853d7",
+      "status": "Accepted",
+      "reason": ""
+    },
+    {
+      "id": "a101",
+      "studentId": "BIT001",
+      "studentName": "Sumitha",
+      "staffId": "STF002",
+      "date": "2025-04-15",
+      "time": "10:30",
+      "emergency": "Normal",
+      "meetLink": "https://meet.google.com/upcoming2",
+      "status": "Approved"
+    },
+    {
+      "id": "a104",
+      "studentId": "BIT001",
+      "studentName": "Sumitha",
+      "staffId": "STF009",
+      "date": "2025-04-05",
+      "time": "14:00",
+      "emergency": "Urgent",
+      "meetLink": "https://meet.google.com/past1",
+      "status": "Completed"
+    },
+    {
+      "id": "c6ab",
+      "studentId": "BIT002",
+      "studentName": "Rohini",
+      "staffId": "STF002",
+      "date": "2025-04-12",
+      "time": "04:17",
+      "emergency": "Emergency",
+      "meetLink": "https://chatgpt.com/c/67f7ce84-385c-8003-8226-a9c4f02853d7",
+      "status": "Pending"
+    },
+    {
+      "id": "d157",
+      "studentId": "BIT002",
+      "studentName": "Rohini",
+      "staffId": "STF001",
+      "date": "2025-04-19",
+      "time": "03:20",
+      "emergency": "Emergency",
+      "meetLink": "https://chatgpt.com/c/67f7ce84-385c-8003-8226-a9c4f02853d7",
+      "status": "Pending"
+    },
+    {
+      "id": "584a",
+      "staffId": "STF001",
+      "staffName": "Mohanpriya",
+      "studentId": "bb43",
+      "studentName": "Sumitha",
+      "date": "2025-04-12",
+      "time": "02:40",
+      "meetLink": "https://chatgpt.com/c/67f7ce84-385c-8003-8226-a9c4f02853d7",
+      "status": "Pending",
+      "emergency": "No"
+    },
+    {
+      "id": "6fc3",
+      "staffId": "STF001",
+      "staffName": "Mohanpriya",
+      "studentId": "bb43",
+      "studentName": "Sumitha",
+      "date": "2025-04-12",
+      "time": "03:50",
+      "meetLink": "https://chatgpt.com/c/67f7ce84-385c-8003-8226-a9c4f02853d7",
+      "reason": "mini project erciew",
+      "emergency": "Urgent",
+      "status": "Pending"
+    }
+  ]
+}

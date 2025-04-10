@@ -1,0 +1,91 @@
+📘 Final Blueprint: BIT Appointment Booking System
+🚀 Project Goal
+Build a frontend-only appointment booking system for students at Bannari Amman Institute of Technology (BIT) to book meetings with faculty/admins, store data locally, and send appointment emails using EmailJS.
+
+🏗️ Structure Overview
+Layer	Tools/Tech
+Frontend	HTML, CSS, JavaScript (or React)
+Data Storage	localStorage
+Email	EmailJS (No backend needed)
+🗂️ Pages (HTML files or React Components)
+Home Page (index.html)
+
+Choose role: Student / Faculty / Admin
+
+Redirect accordingly
+
+Student Booking Form (student.html)
+
+Input: Name, Email, Faculty, DateTime, GMeet Link, Emergency Level, Reason
+
+Save data to localStorage
+
+Trigger EmailJS to send appointment mail
+
+Faculty Dashboard (faculty.html)
+
+Set availability slots
+
+View all student bookings
+
+Optional: Approve/reject appointment
+
+Mark status (confirmed, cancelled, completed)
+
+Admin Panel (optional admin.html)
+
+View all bookings across departments
+
+Filter by faculty, emergency level, date
+
+Export report (optional)
+
+Confirmation Page (confirmation.html)
+
+Show success message
+
+Show booking summary with link to home
+
+📋 Features Summary
+🧑‍🎓 Student-Side
+Fill appointment form
+
+Choose faculty + time
+
+Add GMeet link
+
+Set emergency level: High / Medium / Low
+
+Receive email confirmation
+
+View own booking history (optional)
+
+👨‍🏫 Faculty-Side
+Login or select role manually
+
+Set time slots (stored in localStorage)
+
+View incoming bookings
+
+Mark appointments as approved / completed
+
+🛠️ Admin (Optional)
+Overview of all appointments
+
+Emergency filters
+
+Export data (CSV/PDF optional)
+
+✨ Future Enhancements (Optional)
+Google Calendar sync
+
+Email reminder before appointment
+
+Export bookings to CSV
+
+Persistent storage using Firebase or backend
+
+Faculty authentication system
+
+Responsive mobile view
+

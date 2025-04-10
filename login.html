@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIT Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center text-blue-800 mb-6">BIT Appointment Portal</h2>
+    
+    <input type="text" id="userId" placeholder="Enter Roll No / Staff ID / Admin ID"
+      class="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+    <input type="password" id="password" placeholder="Password"
+      class="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+    <button onclick="login()"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200">
+      Login
+    </button>
+
+    <p id="errorMsg" class="text-red-600 text-sm text-center mt-4"></p>
+  </div>
+
+  <script>
+    async function login() {
+  const id = document.getElementById("userId").value.trim();
+  const password = document.getElementById("password").value;
+  const errorMsg = document.getElementById("errorMsg");
+
+  if (!id || !password) {
+    errorMsg.textContent = "Please enter ID and Password.";
+    return;
+  }
+
+  try {
+    // Fetch each group separately
+    const students = await fetch("http://localhost:3000/students").then(res => res.json());
+    const staff = await fetch("http://localhost:3000/staff").then(res => res.json());
+    const admins = await fetch("http://localhost:3000/admins").then(res => res.json());
+
+    let user = null;
+    let role = null;
+
+    if (id.startsWith("BIT")) {
+      user = students.find(s => s.rollNo === id && s.password === password);
+      role = "student";
+    } else if (id.startsWith("STF")) {
+      user = staff.find(s => s.staffId === id && s.password === password);
+      role = "staff";
+    } else if (id.startsWith("ADMIN")) {
+      user = admins.find(a => a.adminId === id && a.password === password);
+      role = "admin";
+    }
+
+    if (user) {
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      window.location.href = `${role}.html`;
+    } else {
+      errorMsg.textContent = "Invalid credentials. Please try again.";
+    }
+
+  } catch (error) {
+    console.error("Login error:", error);
+    errorMsg.textContent = "Something went wrong. Please check your server.";
+  }
+}
+
+  </script>
+
+</body>
+</html>

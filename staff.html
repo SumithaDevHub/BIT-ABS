@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-green-900 text-white flex flex-col">
+    <div class="p-6 text-center border-b border-green-700">
+      <h2 class="text-2xl font-bold">BIT Portal</h2>
+      <p class="text-sm mt-1">Staff Dashboard</p>
+    </div>
+    <nav class="flex-1 p-4 space-y-3">
+      <button onclick="showSection('dashboard')" class="block w-full text-left hover:bg-green-700 px-4 py-2 rounded">Dashboard</button>
+      <button onclick="showSection('book')" class="block w-full text-left hover:bg-green-700 px-4 py-2 rounded">Book Appointment</button>
+      <button onclick="showSection('view')" class="block w-full text-left hover:bg-green-700 px-4 py-2 rounded">View Appointments</button>
+      <button onclick="logout()" class="block w-full text-left hover:bg-red-700 bg-red-600 px-4 py-2 rounded mt-8">Logout</button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8 overflow-y-auto">
+    <!-- Dashboard -->
+    <section id="dashboardSection" class="hidden">
+      <h2 class="text-2xl font-semibold mb-4">Staff Info</h2>
+      <div class="bg-white shadow p-6 rounded-lg space-y-2">
+        <p><strong>Name:</strong> <span id="staffName"></span></p>
+        <p><strong>Staff ID:</strong> <span id="staffId"></span></p>
+        <p><strong>Email:</strong> <span id="staffEmail"></span></p>
+        <p><strong>Department:</strong> <span id="staffDept"></span></p>
+      </div>
+    </section>
+
+    <!-- Book Appointment -->
+<section id="bookSection" class="hidden">
+    <h2 class="text-2xl font-semibold mb-4">Book an Appointment</h2>
+  
+    <form id="bookForm" class="bg-white shadow p-6 rounded-lg space-y-4 max-w-lg" onsubmit="bookStaffAppointment(event)">
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Booking For</label>
+        <select id="targetType" onchange="loadUsers()" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          <option value="student">Student</option>
+          <option value="staff">Staff</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="personId" class="block text-sm font-medium text-gray-700">Select User</label>
+        <select id="personId" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          <option value="">Loading users...</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+        <input type="date" id="date" required class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+      </div>
+  
+      <div>
+        <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+        <input type="time" id="time" required class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+      </div>
+  
+      <div>
+        <label for="emergency" class="block text-sm font-medium text-gray-700">Emergency Level</label>
+        <select id="emergency" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          <option value="Normal">Normal</option>
+          <option value="Urgent">Urgent</option>
+          <option value="Emergency">Emergency</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="reason" class="block text-sm font-medium text-gray-700">Reason (Optional)</label>
+        <input type="text" id="reason" placeholder="Enter reason for appointment" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+      </div>
+  
+      <div>
+        <label for="meetLink" class="block text-sm font-medium text-gray-700">Google Meet Link</label>
+        <input type="url" id="meetLink" placeholder="https://meet.google.com/..." required class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+      </div>
+  
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Book Now</button>
+    </form>
+  </section>
+  
+
+    <!-- View Appointments -->
+    <section id="viewSection" class="hidden">
+      <h2 class="text-2xl font-semibold mb-4">Appointments</h2>
+      <div id="appointmentContainer" class="space-y-6">
+        <!-- Appointments will be injected here -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const staff = JSON.parse(localStorage.getItem("currentUser"));
+    if (!staff || !staff.staffId) {
+      window.location.href = "login.html";
+    }
+  
+    document.getElementById("staffName").textContent = staff.name;
+    document.getElementById("staffId").textContent = staff.staffId;
+    document.getElementById("staffEmail").textContent = staff.email;
+    document.getElementById("staffDept").textContent = staff.department;
+  
+    function showSection(section) {
+      document.getElementById("dashboardSection").classList.add("hidden");
+      document.getElementById("viewSection").classList.add("hidden");
+      document.getElementById("bookSection").classList.add("hidden");
+  
+      if (section === "dashboard") {
+        document.getElementById("dashboardSection").classList.remove("hidden");
+      } else if (section === "view") {
+        document.getElementById("viewSection").classList.remove("hidden");
+        loadAppointments();
+      } else if (section === "book") {
+        document.getElementById("bookSection").classList.remove("hidden");
+        loadUsers();
+      }
+    }
+  
+    showSection("dashboard");
+  
+    function logout() {
+      localStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    }
+  
+    async function loadUsers() {
+      const type = document.getElementById("targetType").value;
+      const select = document.getElementById("personId");
+      select.innerHTML = "<option value=''>Loading users...</option>";
+  
+      try {
+        const res = await fetch(`http://localhost:3000/${type}s`);
+        const data = await res.json();
+        select.innerHTML = data.map(user => `
+          <option value="${user.id}" data-name="${user.name}">${user.name} (${user.id})</option>
+        `).join('');
+      } catch (err) {
+        select.innerHTML = "<option value=''>Failed to load users</option>";
+      }
+    }
+  
+    document.getElementById("bookForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      const personSelect = document.getElementById("personId");
+      const selectedOption = personSelect.options[personSelect.selectedIndex];
+  
+      const appointment = {
+        staffId: staff.staffId,
+        staffName: staff.name,
+        studentId: selectedOption.value,
+        studentName: selectedOption.dataset.name,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        meetLink: document.getElementById("meetLink").value,
+        reason: document.getElementById("reason").value || "",
+        emergency: document.getElementById("emergency").value,
+        status: "Pending"
+      };
+  
+      try {
+        const res = await fetch("http://localhost:3000/appointments", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(appointment)
+        });
+  
+        if (res.ok) {
+          alert("Appointment booked successfully!");
+          document.getElementById("bookForm").reset();
+        }
+      } catch (err) {
+        alert("Failed to book appointment.");
+        console.error("Book appointment error:", err);
+      }
+    });
+  
+    async function loadAppointments() {
+  const container = document.getElementById("appointmentContainer");
+  container.innerHTML = "<p class='text-gray-600'>Loading appointments...</p>";
+
+  try {
+    const res = await fetch(`http://localhost:3000/appointments?staffId=${staff.staffId}`);
+    const appointments = await res.json();
+
+    if (appointments.length === 0) {
+      container.innerHTML = "<p class='text-gray-600'>No appointments found.</p>";
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const approvalAppointments = appointments.filter(app => app.status === "Pending");
+    const upcomingAppointments = appointments.filter(app => 
+      (app.status === "Accepted" || app.status === "Postponed") && app.date >= today
+    );
+    const pastAppointments = appointments.filter(app => app.date < today || app.status === "Rejected");
+
+    function renderSection(title, data) {
+      return `
+        <div>
+          <h3 class="text-xl font-semibold mb-2 mt-6">${title}</h3>
+          ${data.length === 0 
+            ? "<p class='text-gray-500'>No appointments.</p>" 
+            : `<ul class="space-y-4">
+                ${data.map(app => `
+                  <li class="bg-white p-4 rounded shadow border space-y-1">
+                    <p><strong>With:</strong> ${app.studentName} (${app.studentId})</p>
+                    <p><strong>Date:</strong> ${app.date}</p>
+                    <p><strong>Time:</strong> ${app.time}</p>
+                    <p><strong>Emergency:</strong> ${app.emergency}</p>
+                    <p><strong>Status:</strong> ${app.status}</p>
+                    <p><strong>Meet Link:</strong> <a href="${app.meetLink}" target="_blank" class="text-blue-600 underline">Join</a></p>
+                    ${app.reason ? `<p><strong>Reason:</strong> ${app.reason}</p>` : ''}
+                    ${(app.status === "Pending" || app.status === "Postponed") ? `
+                      <div class="mt-2 space-x-2">
+                        <button onclick="updateStatus('${app.id}', 'Accepted')" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">Accept</button>
+                        <button onclick="rejectWithReason('${app.id}')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Reject</button>
+                        <button onclick="postpone('${app.id}')" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">Postpone</button>
+                      </div>
+                    ` : ''}
+                  </li>
+                `).join('')}
+              </ul>`
+          }
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      ${renderSection("🟡 Approval (Pending)", approvalAppointments)}
+      ${renderSection("🟢 Upcoming", upcomingAppointments)}
+      ${renderSection("🔵 Past or Rejected", pastAppointments)}
+    `;
+
+  } catch (error) {
+    container.innerHTML = "<p class='text-red-600'>❌ Failed to load appointments.</p>";
+    console.error("Appointment load error:", error);
+  }
+}
+
+  
+    async function updateStatus(id, status, reason = "") {
+      const res = await fetch(`http://localhost:3000/appointments/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, reason })
+      });
+  
+      if (res.ok) loadAppointments();
+    }
+  
+    function rejectWithReason(id) {
+      const reason = prompt("Enter reason for rejection:");
+      if (reason) updateStatus(id, "Rejected", reason);
+    }
+  
+    function postpone(id) {
+      const newDate = prompt("Enter new date (YYYY-MM-DD):");
+      const newTime = prompt("Enter new time (HH:MM):");
+      if (newDate && newTime) {
+        fetch(`http://localhost:3000/appointments/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ date: newDate, time: newTime, status: "Postponed" })
+        }).then(res => {
+          if (res.ok) loadAppointments();
+        });
+      }
+    }
+  </script>
+  
+</body>
+</html>

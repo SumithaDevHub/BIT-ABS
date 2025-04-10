@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-900 text-white flex flex-col">
+    <div class="p-6 text-center border-b border-blue-700">
+      <h2 class="text-2xl font-bold">BIT Portal</h2>
+      <p class="text-sm mt-1">Student Dashboard</p>
+    </div>
+    <nav class="flex-1 p-4 space-y-3">
+      <button onclick="showSection('dashboard')" class="block w-full text-left hover:bg-blue-700 px-4 py-2 rounded">Dashboard</button>
+      <button onclick="showSection('book')" class="block w-full text-left hover:bg-blue-700 px-4 py-2 rounded">Book Appointment</button>
+      <button onclick="showSection('view')" class="block w-full text-left hover:bg-blue-700 px-4 py-2 rounded">View Appointments</button>
+      <button onclick="logout()" class="block w-full text-left hover:bg-red-700 bg-red-600 px-4 py-2 rounded mt-8">Logout</button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8 overflow-y-auto">
+    <!-- Dashboard -->
+    <section id="dashboardSection" class="hidden">
+      <h2 class="text-2xl font-semibold mb-4">Student Info</h2>
+      <div class="bg-white shadow p-6 rounded-lg space-y-2">
+        <p><strong>Name:</strong> <span id="stuName"></span></p>
+        <p><strong>Roll No:</strong> <span id="stuRoll"></span></p>
+        <p><strong>Email:</strong> <span id="stuEmail"></span></p>
+        <p><strong>Department:</strong> <span id="stuDept"></span></p>
+        <p><strong>Year:</strong> <span id="stuYear"></span></p>
+      </div>
+    </section>
+
+    <!-- Book Appointment -->
+<section id="bookSection" class="hidden">
+  <h2 class="text-2xl font-semibold mb-4">Book an Appointment</h2>
+
+  <form id="appointmentForm" class="bg-white shadow p-6 rounded-lg space-y-4" onsubmit="bookAppointment(event)">
+    <div>
+      <label for="staff" class="block text-sm font-medium text-gray-700">Select Staff</label>
+      <select id="staff" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+        <option value="">Loading staff...</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+      <input type="date" id="date" required class="mt-1 block w-full border border-gray-300 rounded-md p-2"/>
+    </div>
+
+    <div>
+      <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+      <input type="time" id="time" required class="mt-1 block w-full border border-gray-300 rounded-md p-2"/>
+    </div>
+
+    <div>
+      <label for="emergency" class="block text-sm font-medium text-gray-700">Emergency Level</label>
+      <select id="emergency" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+        <option value="Normal">Normal</option>
+        <option value="Urgent">Urgent</option>
+        <option value="Emergency">Emergency</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="link" class="block text-sm font-medium text-gray-700">Google Meet Link</label>
+      <input type="url" id="link" placeholder="https://meet.google.com/..." required class="mt-1 block w-full border border-gray-300 rounded-md p-2"/>
+    </div>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Book Now</button>
+
+    <p id="formMsg" class="text-sm mt-3"></p>
+  </form>
+</section>
+
+
+    <!-- View Appointments -->
+    <section id="viewSection" class="hidden">
+      <h2 class="text-2xl font-semibold mb-4">Your Appointments</h2>
+      <div id="appointmentContainer" class="space-y-6">
+        <!-- Appointments will be injected here -->
+      </div>
+    </section>
+    
+  </main>
+
+  <script>
+    // Load user from localStorage
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user || !user.rollNo) {
+      window.location.href = "login.html";
+    }
+
+    // Show profile info
+    document.getElementById("stuName").textContent = user.name;
+    document.getElementById("stuRoll").textContent = user.rollNo;
+    document.getElementById("stuEmail").textContent = user.email;
+    document.getElementById("stuDept").textContent = user.department;
+    document.getElementById("stuYear").textContent = user.year;
+
+    // Show selected section
+    function showSection(section) {
+      document.getElementById("dashboardSection").classList.add("hidden");
+      document.getElementById("bookSection").classList.add("hidden");
+      document.getElementById("viewSection").classList.add("hidden");
+
+      if (section === "dashboard") {
+        document.getElementById("dashboardSection").classList.remove("hidden");
+      } else if (section === "book") {
+        document.getElementById("bookSection").classList.remove("hidden");
+      } else if (section === "view") {
+        document.getElementById("viewSection").classList.remove("hidden");
+      }
+    }
+
+    // Default view
+    showSection("dashboard");
+
+    // Logout
+    function logout() {
+      localStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    }
+
+    // Fetch staff for dropdown
+  async function loadStaffOptions() {
+    const staffSelect = document.getElementById("staff");
+    try {
+      const res = await fetch("http://localhost:3000/staff");
+      const staffList = await res.json();
+
+      staffSelect.innerHTML = '<option value="">Select a staff member</option>';
+      staffList.forEach(staff => {
+        const option = document.createElement("option");
+        option.value = staff.staffId;
+        option.textContent = `${staff.name} (${staff.department})`;
+        staffSelect.appendChild(option);
+      });
+    } catch (error) {
+      staffSelect.innerHTML = '<option value="">Failed to load staff</option>';
+      console.error("Error loading staff:", error);
+    }
+  }
+
+  loadStaffOptions();
+
+  // Book appointment handler
+  async function bookAppointment(event) {
+    event.preventDefault();
+    const formMsg = document.getElementById("formMsg");
+    const student = JSON.parse(localStorage.getItem("currentUser"));
+
+    const appointment = {
+      studentId: student.rollNo,
+      studentName: student.name,
+      staffId: document.getElementById("staff").value,
+      date: document.getElementById("date").value,
+      time: document.getElementById("time").value,
+      emergency: document.getElementById("emergency").value,
+      meetLink: document.getElementById("link").value,
+      status: "Pending"  // default
+    };
+
+    try {
+      const res = await fetch("http://localhost:3000/appointments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(appointment)
+      });
+
+      if (res.ok) {
+        formMsg.textContent = "✅ Appointment booked successfully!";
+        formMsg.className = "text-green-600 text-sm mt-3";
+        document.getElementById("appointmentForm").reset();
+      } else {
+        throw new Error("Failed to book appointment");
+      }
+    } catch (error) {
+      formMsg.textContent = "❌ Error booking appointment. Please try again.";
+      formMsg.className = "text-red-600 text-sm mt-3";
+      console.error("Booking error:", error);
+    }
+  }
+
+  // view appointments
+  async function loadAppointments() {
+  const student = JSON.parse(localStorage.getItem("currentUser"));
+  const container = document.getElementById("appointmentContainer");
+  container.innerHTML = "<p class='text-gray-600'>Loading appointments...</p>";
+
+  try {
+    const res = await fetch(`http://localhost:3000/appointments?studentId=${student.rollNo}`);
+    const appointments = await res.json();
+
+    const now = new Date();
+    const pending = [];
+    const upcoming = [];
+    const past = [];
+
+    appointments.forEach(app => {
+      const appDateTime = new Date(`${app.date}T${app.time}`);
+      if (app.status === "Pending") {
+        pending.push(app);
+      } else if (appDateTime >= now) {
+        upcoming.push(app);
+      } else {
+        past.push(app);
+      }
+    });
+
+    container.innerHTML = `
+      ${renderSection("⏳ Pending", pending)}
+      ${renderSection("📅 Upcoming", upcoming)}
+      ${renderSection("📁 Past", past)}
+    `;
+  } catch (error) {
+    container.innerHTML = "<p class='text-red-600'>❌ Failed to load appointments.</p>";
+    console.error("View appointment error:", error);
+  }
+}
+
+function renderSection(title, list) {
+  if (list.length === 0) {
+    return `
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">${title}</h3>
+        <p class="text-sm text-gray-500">No appointments in this category.</p>
+      </div>
+    `;
+  }
+
+  return `
+    <div>
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">${title}</h3>
+      <ul class="space-y-2">
+        ${list.map(app => `
+          <li class="bg-white p-4 rounded shadow border">
+            <p><strong>Staff ID:</strong> ${app.staffId}</p>
+            <p><strong>Date:</strong> ${app.date}</p>
+            <p><strong>Time:</strong> ${app.time}</p>
+            <p><strong>Emergency:</strong> ${app.emergency}</p>
+            <p><strong>Status:</strong> ${app.status}</p>
+            <p><strong>Meet Link:</strong> <a href="${app.meetLink}" target="_blank" class="text-blue-600 underline">Join</a></p>
+          </li>
+        `).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+// Automatically load when section is visible
+function showSection(section) {
+  document.getElementById("dashboardSection").classList.add("hidden");
+  document.getElementById("bookSection").classList.add("hidden");
+  document.getElementById("viewSection").classList.add("hidden");
+
+  if (section === "dashboard") {
+    document.getElementById("dashboardSection").classList.remove("hidden");
+  } else if (section === "book") {
+    document.getElementById("bookSection").classList.remove("hidden");
+  } else if (section === "view") {
+    document.getElementById("viewSection").classList.remove("hidden");
+    loadAppointments();  // ← fetch data when viewing
+  }
+}
+
+  </script>
+
+</body>
+</html>
