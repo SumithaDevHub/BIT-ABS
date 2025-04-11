@@ -2,63 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BIT Appointment Booking System</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50 font-sans text-gray-800">
+
   <!-- Header -->
-  <header class="bg-blue-900 text-white p-4 flex justify-between items-center">
-    <div class="text-xl font-bold">Bannari Amman Institute of Technology</div>
-    <nav class="space-x-4">
-      <a href="#features" class="hover:underline">Features</a>
-      <a href="#login" class="hover:underline">Login</a>
+  <header class="bg-blue-900 text-white px-6 py-4 shadow-md flex justify-between items-center">
+    <div class="text-2xl font-bold tracking-wide">BIT Appointment System</div>
+    <nav class="space-x-6 text-sm md:text-base">
+      <a href="#features" class="hover:underline transition">Features</a>
+      <a href="#login" class="hover:underline transition">Login</a>
     </nav>
   </header>
 
   <!-- Hero Section -->
-  <section class="text-center py-16 bg-blue-100">
-    <h1 class="text-4xl font-bold text-blue-900 mb-4">BIT Appointment Booking System</h1>
-    <p class="text-lg text-blue-800">Smart Campus Scheduling – Simplified, Streamlined, and Digitized</p>
+  <section class="text-center py-20 bg-blue-100 px-4">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 mb-4 leading-tight">Smart Campus Scheduling</h1>
+    <p class="text-lg md:text-xl text-blue-800 max-w-2xl mx-auto">Simplified, Streamlined, and Digitized for Seamless Appointments</p>
   </section>
 
   <!-- Purpose -->
   <section class="p-8 max-w-5xl mx-auto">
-    <h2 class="text-2xl font-semibold text-blue-900 mb-4">Why Go Digital?</h2>
-    <ul class="space-y-4 text-gray-700">
-      <li><strong>Adopt Digital Solutions:</strong> Say goodbye to manual booking systems. Ensure accuracy, automation, and convenience.</li>
-      <li><strong>Minimize No-Shows:</strong> Reduce missed appointments with timely email confirmations and reminders.</li>
-      <li><strong>Address Manual Scheduling Issues:</strong> Eliminate double bookings, miscommunication, and inefficiencies.</li>
+    <h2 class="text-3xl font-semibold text-blue-900 mb-6">Why Go Digital?</h2>
+    <ul class="space-y-4 text-gray-700 text-lg leading-relaxed">
+      <li><span class="font-semibold text-blue-800">Adopt Digital Solutions:</span> Say goodbye to manual booking systems. Ensure accuracy, automation, and convenience.</li>
+      <li><span class="font-semibold text-blue-800">Minimize No-Shows:</span> Reduce missed appointments with timely email confirmations and reminders.</li>
+      <li><span class="font-semibold text-blue-800">Address Manual Scheduling Issues:</span> Eliminate double bookings, miscommunication, and inefficiencies.</li>
     </ul>
   </section>
 
   <!-- Features -->
-  <section id="features" class="bg-white py-10">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center">Key Features</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-blue-50 p-4 rounded shadow">
-          <h3 class="font-semibold text-lg">Improve Time Management</h3>
+  <section id="features" class="bg-white py-14 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-blue-900 text-center mb-10">Key Features</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature Cards -->
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
+          <h3 class="font-semibold text-lg text-blue-800 mb-2">Improve Time Management</h3>
           <p>Automate scheduling and provide real-time availability.</p>
         </div>
-        <div class="bg-blue-50 p-4 rounded shadow">
-          <h3 class="font-semibold text-lg">Streamline Communication</h3>
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
+          <h3 class="font-semibold text-lg text-blue-800 mb-2">Streamline Communication</h3>
           <p>Enable centralized booking and automated notifications.</p>
         </div>
-        <div class="bg-blue-50 p-4 rounded shadow">
-          <h3 class="font-semibold text-lg">Anytime Access</h3>
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
+          <h3 class="font-semibold text-lg text-blue-800 mb-2">Anytime Access</h3>
           <p>Access the platform 24/7 via web or mobile devices.</p>
         </div>
-        <div class="bg-blue-50 p-4 rounded shadow">
-          <h3 class="font-semibold text-lg">Operational Efficiency</h3>
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
+          <h3 class="font-semibold text-lg text-blue-800 mb-2">Operational Efficiency</h3>
           <p>Minimize workload and prioritize appointments by emergency level.</p>
         </div>
-        <div class="bg-blue-50 p-4 rounded shadow">
-          <h3 class="font-semibold text-lg">Emergency Level Handling</h3>
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
+          <h3 class="font-semibold text-lg text-blue-800 mb-2">Emergency Level Handling</h3>
           <p>Classify appointments as High, Medium, or Low priority.</p>
         </div>
-        <div class="bg-blue-50 p-4 rounded shadow">
-          <h3 class="font-semibold text-lg">Appointment History</h3>
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition">
+          <h3 class="font-semibold text-lg text-blue-800 mb-2">Appointment History</h3>
           <p>Maintain a log of all past appointments for reference.</p>
         </div>
       </div>
@@ -66,29 +68,30 @@
   </section>
 
   <!-- Login Access -->
-  <section id="login" class="py-10 bg-blue-100">
+  <section id="login" class="py-16 bg-blue-50 px-6">
     <div class="text-center max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold text-blue-900 mb-6">Login Access</h2>
-      <div class="flex justify-center gap-6 flex-wrap">
-        <a href="login.html" class="bg-white p-6 rounded shadow hover:bg-blue-50 transition w-60">
-          <h3 class="font-semibold text-lg text-blue-800">Student Login</h3>
-          <p class="text-gray-600">Book appointments with faculty</p>
+      <h2 class="text-3xl font-bold text-blue-900 mb-10">Login Access</h2>
+      <div class="flex flex-wrap justify-center gap-8">
+        <a href="login.html" class="bg-white hover:bg-blue-100 transition p-6 rounded-xl shadow w-72 text-left border border-gray-200">
+          <h3 class="text-lg font-semibold text-blue-800 mb-1">Student Login</h3>
+          <p class="text-gray-600 text-sm">Book appointments with faculty</p>
         </a>
-        <a href="login.html" class="bg-white p-6 rounded shadow hover:bg-blue-50 transition w-60">
-          <h3 class="font-semibold text-lg text-blue-800">Faculty Login</h3>
-          <p class="text-gray-600">Manage availability and view appointments</p>
+        <a href="login.html" class="bg-white hover:bg-blue-100 transition p-6 rounded-xl shadow w-72 text-left border border-gray-200">
+          <h3 class="text-lg font-semibold text-blue-800 mb-1">Faculty Login</h3>
+          <p class="text-gray-600 text-sm">Manage availability and view appointments</p>
         </a>
-        <a href="login.html" class="bg-white p-6 rounded shadow hover:bg-blue-50 transition w-60">
-          <h3 class="font-semibold text-lg text-blue-800">Admin Login</h3>
-          <p class="text-gray-600">Access system-wide appointment data</p>
+        <a href="login.html" class="bg-white hover:bg-blue-100 transition p-6 rounded-xl shadow w-72 text-left border border-gray-200">
+          <h3 class="text-lg font-semibold text-blue-800 mb-1">Admin Login</h3>
+          <p class="text-gray-600 text-sm">Access system-wide appointment data</p>
         </a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-blue-900 text-white p-4 text-center">
+  <footer class="bg-blue-900 text-white p-4 text-center text-sm mt-10">
     &copy; 2025 Bannari Amman Institute of Technology. All rights reserved.
   </footer>
+
 </body>
 </html>
